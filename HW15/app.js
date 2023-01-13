@@ -95,7 +95,7 @@ console.log([[0, 1], [2, 3]].reduce(
     return array.reduce((acc,cur,i)=> {
     acc[0] = (acc[0] === undefined || cur < acc[0]) ? cur : acc[0];
     acc[1] = (acc[1] === undefined || cur > acc[1]) ? cur : acc[1];
-    acc[2] = (acc[2] === undefined) || cur : acc[2] +  cur ;
+    acc[2] = (acc[2] === undefined) ? cur : acc[2] +  cur ;
     if (i == array.length-1){
         acc[2]/=array.length;
     }
