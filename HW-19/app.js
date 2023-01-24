@@ -118,7 +118,7 @@ displayStringOccurrences(strings);
 //TODO 
 //returns country with most amount of employees
 function getMostPopulatedCountry(employees) {
-    return (getMostPopulatedCountry(employees, 1)[0]);
+    return (getMostPupulatedCountries(employees, 1)[0]);
 }
 console.log(getMostPopulatedCountry(employees));
 
@@ -172,32 +172,47 @@ getMostPupulatedCountries(employees, 2).forEach(e => console.log(e));
 //exampls non-anagrams: eloll (no h), ollehh(different length),
 // olaeh ("a" doesn't exist in word), oleh(different length)
 
+const word1 = 'elolh';
+const word2 = 'hello';
 
 
 function isAnagram(word, anagram) {
-    const wordArr = word.split('');
-    const anagramArr = anagram.split('');
-    if (wordArr.length != anagramArr.length || word === anagram) {
-        return false;
-    };
-    const res = {};
-    for (let i = 0; i < word.Arr.length; i++) {
-        if (!res[wordArr[i]]) {
-            res[wordArr[i]] = 1;
-        } else {
-            res[wordArr[i]]++;
-            if (!res[wordArr[i]]) {
-                res[wordArr[i]] = -1;
-            } else {
-                res[wordArr[i]]--;
-                if (!res[wordArr[i]]) {
-                    delete res[anagramArr[i]];
-                }
-            }
-        }
-        if (!Object.entries(res).length) {
-            return true;
-        }
+    let result = false;
+
+    if (word === anagram || word.length !== anagram.length) {
+        return result;
     }
-    return false;
+
+    const letters = {};
+
+    const wordArr = word.split('');
+    const anagramArr = word.split('');
+
+    wordArr.forEach(function (letter) {
+        if (letters[letter]) {
+            letters[letter] += 1;   // result[letter] = result[letter] + 1
+        } else {
+            letters[letter] = 1;
+        }
+    })
+
+    for (let i = 0; i <= anagramArr.length; i++) {
+        if (!wordArr.includes(anagramArr[i])) {
+            result = false;
+            break;
+        }
+        const anagramLetter = anagramArr[i];
+        letters[anagramLetter] -= 1;
+    }
+
+    const lettersResultArray = Object.values(letters);  // [0,0,0,0];
+    const nonZeroValuesArray = lettersResultArray.filter(function (item) {
+        return item !== 0;
+    });
+
+    result = nonZeroValuesArray.length === 0;
+    return result;
 }
+
+
+console.log('RESULT:', isAnagram(word1, word2));
